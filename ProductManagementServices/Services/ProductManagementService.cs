@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace ProductManagementServices.Services
 {
-    public class ProductManagementService : IProductMamangementService
+    public class ProductManagementService : IProductManagementService
     {
         private readonly string _jsonFilePath = Path.Combine( Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ProductManagementData\\Data\\Products.json");
 

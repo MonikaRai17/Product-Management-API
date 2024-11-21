@@ -3,7 +3,7 @@ using ProductManagementModel.Models;
 
 namespace ProductManagementServices.Services
 {
-    public interface IProductMamangementService
+    public interface IProductManagementService
     {
         Task<List<Product>> GetAllProducts();
         Task<Product> GetProductById(int id);

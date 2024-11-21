@@ -11,9 +11,9 @@ namespace Product_Management_API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IProductMamangementService _productService;
+        private IProductManagementService _productService;
 
-        public ProductsController(IProductMamangementService productService)
+        public ProductsController(IProductManagementService productService)
         {
             this._productService = productService;
         }
@@ -81,8 +81,8 @@ namespace Product_Management_API.Controllers
 
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Post(int id, [FromBody] Product product)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] Product product)
         {
             if (id != product.Id) return BadRequest();
             await _productService.UpdateProduct(product);

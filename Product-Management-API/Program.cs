@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-builder.Services.AddScoped<IProductMamangementService, ProductManagementService>();
+builder.Services.AddScoped<IProductManagementService, ProductManagementService>();
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
