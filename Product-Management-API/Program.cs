@@ -24,18 +24,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 }
-else
-{
-    app.UseExceptionHandler("/error"); // If you need a custom error endpoint
-    app.UseHsts();
-}
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseMiddleware<ErrorHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();

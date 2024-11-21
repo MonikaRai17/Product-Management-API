@@ -18,20 +18,16 @@ namespace Product_Management_API.Controllers
             this._productService = productService;
         }
 
-        
+
         [HttpGet]
         public async Task<IActionResult> Get(string? searchItem, int _page, int _limit)
         {
-            try {
-               // List<Product> filterdata = null;
+            
+                // List<Product> filterdata = null;
                 var response = await this._productService.GetAllProducts();
-                if (response == null )
-                    return NotFound();
+               
                 if (response != null)
                 {
-                   
-                    
-
                     if (!String.IsNullOrEmpty(searchItem))
                     {
                         var filteredProducts = response
@@ -56,13 +52,8 @@ namespace Product_Management_API.Controllers
                 {
                     return StatusCode((int)HttpStatusCode.BadRequest, "Issue in API!");
                 }
+                throw new Exception("Exception while fetching all data.");
 
-            }
-            catch(Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Exception occured in API: "+ex.Message);
-            }
-            
         }
 
         [HttpGet("{id}")]
@@ -74,53 +65,38 @@ namespace Product_Management_API.Controllers
                 return NotFound();
             }
             return Ok(product);
+            throw new Exception("Exception while get the data.");
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Product product)
         {
-            try
-            {
+           
                 if (product == null) { return BadRequest(); }
-               
+
                 await _productService.AddProduct(product);
                 return Ok();
 
-            }
-            catch (Exception ex) {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Exception occured in API: " + ex.Message);
-            }
-            
-            
+                throw new Exception("Exception while add the data.");
+
         }
 
         [HttpPost("{id}")]
         public async Task<IActionResult> Post(int id, [FromBody] Product product)
         {
-            try
-            {
-                if (id != product.Id) return BadRequest();
-                await _productService.UpdateProduct(product);
-                return Ok();
-            }
-            catch (Exception ex) {
-                return StatusCode((int) HttpStatusCode.InternalServerError, "Exception occured in API: " + ex.Message);
-            }
-        }
+            if (id != product.Id) return BadRequest();
+            await _productService.UpdateProduct(product);
+            return Ok();
+            throw new Exception("Exception while update the data.");
+    }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                if (id == 0) return BadRequest();
-                await _productService.DeleteProduct(id);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, "Exception occured in API: " + ex.Message);
-            }
+            if (id == 0) return BadRequest();
+            await _productService.DeleteProduct(id);
+            return Ok();
+            throw new Exception("Exception while delete the data.");
 
         }
     }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -25,11 +27,15 @@ namespace Product_Management_API
             {
                 // Log the exception (optional)
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsync(new
+                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                if (contextFeature != null)
                 {
-                    StatusCode = context.Response.StatusCode,
-                    Message = "Internal Server Error from the custom middleware."
-                }.ToString());
+                    await context.Response.WriteAsync(new 
+                    {
+                        StatusCode = context.Response.StatusCode,
+                        Message = "Internal Server Error."
+                    }.ToString());
+                }
             }
         }
     }
